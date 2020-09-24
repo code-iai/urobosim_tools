@@ -63,9 +63,9 @@ def publisher(args):
             # # # t.transform.rotation = t.transform.rotation * correction_rotation
             # t.transform.rotation = tf.transformations.quaternion_multiply(t.transform.rotation,correction_rotation)
 
-            # tfm = tf2_msgs.msg.TFMessage([t])
-            # # print(tfm)
-            # pub.publish(tfm)
+            tfm = tf2_msgs.msg.TFMessage([t])
+            # print(tfm)
+            pub.publish(tfm)
             rate.sleep()
 
 
