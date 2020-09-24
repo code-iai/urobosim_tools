@@ -38,23 +38,34 @@ def publisher(args):
                 t.transform.translation.x = trans[0] + correction_transform_x
                 t.transform.translation.y = trans[1] + correction_transform_y
                 t.transform.translation.z = trans[2] + correction_transform_z
+
+                rotation_q = (rot[0], rot[1], rot[2], rot[3])
+                rotation_correction_q = tf.transformations.quaternion_from_euler(correction_rotation_r, correction_rotation_p, correction_rotation_y)
+                rotation_corrected_q = tf.transformations.quaternion_multiply(rotation_q,rotation_correction_q)
+
+                t.transform.rotation.x = rotation_corrected_q[0]
+                t.transform.rotation.y = rotation_corrected_q[1]
+                t.transform.rotation.z = rotation_corrected_q[2]
+                t.transform.rotation.w = rotation_corrected_q[3]
             else:
                 t.transform.translation.x = trans[0]
                 t.transform.translation.y = trans[1]
                 t.transform.translation.z = trans[2]
 
-            t.transform.rotation.x = rot[0]
-            t.transform.rotation.y = rot[1]
-            t.transform.rotation.z = rot[2]
-            t.transform.rotation.w = rot[3]
+                t.transform.rotation.x = rot[0]
+                t.transform.rotation.y = rot[1]
+                t.transform.rotation.z = rot[2]
+                t.transform.rotation.w = rot[3]
+
 
             # correction_rotation = tf.transformations.quaternion_from_euler(correction_rotation_r, correction_rotation_p, correction_rotation_y)
-            # # t.transform.rotation = t.transform.rotation * correction_rotation
+            # correction_rotation = tf.transformations.quaternion_from_euler(correction_rotation_r, correction_rotation_p, correction_rotation_y)
+            # # # t.transform.rotation = t.transform.rotation * correction_rotation
             # t.transform.rotation = tf.transformations.quaternion_multiply(t.transform.rotation,correction_rotation)
 
-            tfm = tf2_msgs.msg.TFMessage([t])
-            # print(tfm)
-            pub.publish(tfm)
+            # tfm = tf2_msgs.msg.TFMessage([t])
+            # # print(tfm)
+            # pub.publish(tfm)
             rate.sleep()
 
 
